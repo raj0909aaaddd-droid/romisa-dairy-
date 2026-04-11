@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Romisa ❤️</title>
+
+<link rel="stylesheet" href="https://unpkg.com/page-flip/dist/css/page-flip.css">
+<script src="https://unpkg.com/page-flip/dist/js/page-flip.browser.min.js"></script>
+
+<style>
+body{
+  margin:0;
+  font-family:Georgia,serif;
+  background:linear-gradient(135deg,#ffeef2,#fff5f8,#f8e8f0);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  overflow:hidden;
+}
+
+/* hearts */
+#hearts{
+  position:fixed;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
+
+.heart{
+  position:absolute;
+  color:#ff69b4;
+  font-size:20px;
+  animation:float 6s linear forwards;
+}
+
+@keyframes float{
+  0%{transform:translateY(100vh);opacity:0;}
+  10%{opacity:0.4;}
+  100%{transform:translateY(-100px);opacity:0;}
+}
+
+/* book */
+#book{
+  width:360px;
+  height:520px;
+}
+
+.page{
+  background:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:25px;
+  font-size:18px;
+  line-height:1.7;
+  border-radius:12px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
+}
+
+.page:first-child{
+  font-size:22px;
+  font-weight:bold;
+  background:linear-gradient(135deg,#ff9a9e,#fecfef);
+  color:white;
+}
+
+/* music button */
+.music{
+  position:fixed;
+  top:20px;
+  right:20px;
+  font-size:24px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div id="hearts"></div>
+
+<div class="music" onclick="toggleMusic()">🎵</div>
+
+<audio id="music" loop>
+  <source src="love.mp3" type="audio/mpeg">
+</audio>
+
+<!-- BOOK -->
+<div id="book">
+  <div class="page">For Romisa ❤️<br><br>Swipe to open 💖</div>
+
+  <div class="page">I made this just for you.</div>
+
+  <div class="page">Even when you're far away,<br>you still make my world feel warm.</div>
+
+  <div class="page">You became someone very special to me.</div>
+
+  <div class="page">Your smile, your voice,<br>your little moments…<br>they stay in my heart.</div>
+
+  <div class="page">Distance doesn't matter,<br>because what I feel is real.</div>
+
+  <div class="page">Romisa ❤️<br><br>
+  You are my peace,<br>
+  my happiness,<br>
+  my everything.<br><br>
+  I love you forever 💖<br><br>
+  – Raj</div>
+</div>
+
+<script>
+
+/* PAGE FLIP */
+const pageFlip = new St.PageFlip(
+  document.getElementById("book"),
+  {
+    width: 360,
+    height: 520,
+    showCover: true,
+    mobileScrollSupport: false
+  }
+);
+
+pageFlip.loadFromHTML(document.querySelectorAll(".page"));
+
+/* MUSIC */
+const music = document.getElementById("music");
+
+/* smart autoplay */
+function startMusic(){
+  music.volume = 0.2;
+  music.play().catch(()=>{});
+}
+
+/* start on first interaction */
+["click","touchstart"].forEach(e=>{
+  document.body.addEventListener(e, startMusic, { once:true });
+});
+
+/* toggle button */
+function toggleMusic(){
+  if(music.paused){
+    music.play();
+  }else{
+    music.pause();
+  }
+}
+
+/* hearts */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerText="💖";
+  h.style.left=Math.random()*100+"%";
+  document.getElementById("hearts").appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},800);
+
+</script>
+
+</body>
+  </html>
