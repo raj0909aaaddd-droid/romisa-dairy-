@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Romisa ❤️</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/page-flip/dist/css/page-flip.css">
+<script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
+
+<style>
+body{
+  margin:0;
+  font-family:Georgia,serif;
+  background:linear-gradient(135deg,#ffeef2,#fff5f8,#f8e8f0);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  overflow:hidden;
+}
+
+/* BOOK */
+#book{
+  width:95vw;
+  max-width:400px;
+  height:75vh;
+}
+
+/* PAGE STYLE */
+.page{
+  background:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+
+  padding:25px 20px;
+  font-size:17px;
+  line-height:1.7;
+
+  border-radius:10px;
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.2),
+    inset 0 0 15px rgba(255,182,193,0.2);
+
+  overflow:hidden;
+}
+
+/* COVER */
+.page.cover{
+  background:linear-gradient(135deg,#ff9a9e,#fecfef);
+  color:white;
+  font-size:22px;
+  font-weight:bold;
+}
+
+/* TYPEWRITER TEXT */
+.text{
+  white-space:pre-line;
+  border-right:2px solid #ff69b4;
+  animation:blink 0.7s infinite;
+}
+
+@keyframes blink{
+  50%{border-color:transparent;}
+}
+
+/* MUSIC BUTTON */
+.music{
+  position:fixed;
+  top:15px;
+  right:15px;
+  font-size:22px;
+  cursor:pointer;
+}
+
+/* REAL PAGE SHADOW */
+.page::after{
+  content:'';
+  position:absolute;
+  right:0;
+  top:0;
+  width:30px;
+  height:100%;
+  background:linear-gradient(to left, rgba(0,0,0,0.15), transparent);
+}
+</style>
+</head>
+
+<body>
+
+<div class="music" onclick="toggleMusic()">🎵</div>
+
+<audio id="music" loop>
+  <source src="love.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="flipSound">
+  <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3">
+</audio>
+
+<div id="book">
+
+<div class="page cover">For Romisa ❤️<br><br>Swipe to open 💖</div>
+
+<div class="page"><div class="text">I made this just for you…  
+because you are not just someone in my life…  
+you are my favorite part of it.</div></div>
+
+<div class="page"><div class="text">When you're gone…  
+I still listen to your voice…  
+just to feel like you're close to me.</div></div>
+
+<div class="page"><div class="text">I read our old chats…  
+and I smile without realizing…  
+remembering how we became so close.</div></div>
+
+<div class="page"><div class="text">I miss you…  
+in the quiet moments…  
+where everything reminds me of you.</div></div>
+
+<div class="page"><div class="text">Your voice… your words…  
+they stay with me…  
+even when you're not here.</div></div>
+
+<div class="page"><div class="text">Romisa ❤️  
+you are my peace…  
+my happiness…  
+my comfort.</div></div>
+
+<div class="page"><div class="text">No matter the distance…  
+my heart always chooses you.</div></div>
+
+<div class="page"><div class="text">I love you more than words can explain 💖  
+– Raj</div></div>
+
+</div>
+
+<script>
+
+/* PAGE FLIP */
+const flipSound = document.getElementById("flipSound");
+
+const pageFlip = new St.PageFlip(
+  document.getElementById("book"),
+  {
+    width: 400,
+    height: 550,
+    size: "stretch",
+    showCover: true,
+    mobileScrollSupport: false,
+    maxShadowOpacity: 0.5
+  }
+);
+
+pageFlip.loadFromHTML(document.querySelectorAll(".page"));
+
+/* SOUND ON FLIP */
+pageFlip.on('flip', () => {
+  flipSound.currentTime = 0;
+  flipSound.play();
+  typeWriterAll();
+});
+
+/* MUSIC */
+const music = document.getElementById("music");
+
+function startMusic(){
+  music.volume = 0.2;
+  music.play().catch(()=>{});
+}
+
+document.addEventListener("click", startMusic, { once:true });
+document.addEventListener("touchstart", startMusic, { once:true });
+
+function toggleMusic(){
+  if(music.paused){
+    music.play();
+  }else{
+    music.pause();
+  }
+}
+
+/* TYPEWRITER EFFECT */
+function typeWriter(el){
+  const text = el.innerText;
+  el.innerText = "";
+  let i = 0;
+
+  function typing(){
+    if(i < text.length){
+      el.innerText += text.charAt(i);
+      i++;
+      setTimeout(typing, 25);
+    }
+  }
+  typing();
+}
+
+function typeWriterAll(){
+  document.querySelectorAll(".text").forEach(el=>{
+    el.innerText = el.getAttribute("data-original") || el.innerText;
+    el.setAttribute("data-original", el.innerText);
+    typeWriter(el);
+  });
+}
+
+/* INITIAL LOAD */
+window.onload = () => {
+  typeWriterAll();
+};
+
+</script>
+
+</body>
+  </html>
